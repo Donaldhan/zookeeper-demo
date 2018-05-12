@@ -12,6 +12,15 @@ import java.util.concurrent.CountDownLatch;
 /**
  * @ClassName: GetChildrenAsyncUsage
  * @Description: ZooKeeper API 获取子节点列表，使用异步(ASync)接口。
+ * 注意，如果重新注册监听器，必须在下一个事件操作之前，如果同时操作，或者前后，很有可能监听不到相关的事件。
+ * 相同的问题，见
+ * @see org.donald.zookeeper.exists.ExistsSyncUsage
+ * @see  ExistsSyncUsage {@link #process(WatchedEvent)}
+ * @see org.donald.zookeeper.exists.ExistsSyncUsage {@link #process(WatchedEvent)}
+ * {@link org.donald.zookeeper.exists.ExistsSyncUsage}
+ * {@link ExistsSyncUsage {@link #process(WatchedEvent)}}
+ * {@link org.donald.zookeeper.exists.ExistsSyncUsage {@link #process(WatchedEvent)}}
+ * 三种类和方法引用的示例。
  * @Author: Donaldhan
  * @Date: 2018-05-12 13:58
  */
@@ -57,6 +66,16 @@ public class GetChildrenAsyncUsage implements Watcher{
                 connectedSemaphore.countDown();
             } else if (event.getType() == Watcher.Event.EventType.NodeChildrenChanged) {
                 try {
+                  /**
+                   *  @param path
+                   *  @param watch 默认注册创建zk客户端事件的监听器，具体见
+                   *  @return an unordered array of children of the node with the given path
+                   *  @throws InterruptedException If the server transaction is interrupted.
+                   *  @throws KeeperException If the server signals an error with a non-zero error code.
+                   *  public List<String> getChildren(String path, boolean watch)
+                   *  throws KeeperException, InterruptedException {
+                   *  return getChildren(path, watch ? watchManager.defaultWatcher : null);
+                    }*/
                     log.info("ReGet Child:{}",zk.getChildren(event.getPath(),true));
                 } catch (Exception e) {}
             }
