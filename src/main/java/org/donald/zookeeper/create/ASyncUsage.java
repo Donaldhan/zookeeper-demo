@@ -64,7 +64,7 @@ class IStringCallback implements AsyncCallback.StringCallback{
      * On failure, rc is set to the corresponding failure code in KeeperException.
      *
      *     KeeperException.Code.NODEEXISTS - The node on give path already exists for some API calls.
-     *     KeeperException.Code.NONODE - The node on given path doesn't exist for some API calls.
+     *     KeeperException.Code.NONODE - The node on given path doesn't exists for some API calls.
      *     KeeperException.Code.NOCHILDRENFOREPHEMERALS - an ephemeral node cannot have children. There is discussion in community. It might be changed in the future.
      *
      * Parameters:
