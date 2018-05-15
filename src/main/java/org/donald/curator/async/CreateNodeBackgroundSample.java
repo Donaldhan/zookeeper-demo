@@ -46,8 +46,12 @@ public class CreateNodeBackgroundSample {
             client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).inBackground(new BackgroundCallback() {
                 @Override
                 public void processResult(CuratorFramework client, CuratorEvent event) throws UnsupportedEncodingException {
+                    log.info("event[code: {}, type:{}", new Object[]{event.getResultCode(),
+                            event.getType()});
+                    /* 注意此时stat 和 data为null
+                    String value =  null == event.getData() ?"":new String(event.getData(), ConfigConstant.CHAR_SET_NAME);
                     log.info("event[code: {}, type:{}, path:{}, data:{}, version  ", new Object[]{event.getResultCode(),
-                            event.getType(), event.getPath(), new String(event.getData(), ConfigConstant.CHAR_SET_NAME), event.getStat().getVersion()});
+                            event.getType(), event.getPath(),value , event.getStat().getVersion()});*/
                     log.info("Thread of processResult: {}", Thread.currentThread().getName());
                     semaphore.countDown();
                 }
@@ -57,8 +61,11 @@ public class CreateNodeBackgroundSample {
             client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).inBackground(new BackgroundCallback() {
                 @Override
                 public void processResult(CuratorFramework client, CuratorEvent event) throws UnsupportedEncodingException {
+                    log.info("event[code: {}, type:{}", new Object[]{event.getResultCode(),
+                            event.getType()});
+                  /*  String value =  null == event.getData() ?"":new String(event.getData(), ConfigConstant.CHAR_SET_NAME);
                     log.info("event[code: {}, type:{}, path:{}, data:{}, version  ", new Object[]{event.getResultCode(),
-                            event.getType(), event.getPath(), new String(event.getData(), ConfigConstant.CHAR_SET_NAME), event.getStat().getVersion()});
+                            event.getType(), event.getPath(),value , event.getStat().getVersion()});*/
                     log.info("Thread of processResult: {}", Thread.currentThread().getName());
                     semaphore.countDown();
                 }
