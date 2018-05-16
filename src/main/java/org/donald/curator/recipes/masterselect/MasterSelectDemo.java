@@ -11,7 +11,7 @@ import org.donald.constant.ConfigConstant;
 
 /**
  * @ClassName: MasterSelectDemo
- * @Description:
+ * @Description: 模拟master选举
  * @Author: Donaldhan
  * @Date: 2018-05-16 15:17
  */
@@ -34,6 +34,13 @@ public class MasterSelectDemo {
             LeaderSelector selector = new LeaderSelector(client,
                     master_path,
                     new LeaderSelectorListenerAdapter() {
+                        /**
+                         * Called when your instance has been granted leadership. This method
+                         * should not return until you wish to release leadership
+                         *
+                         * @param client the client
+                         * @throws Exception any errors
+                         */
                         @Override
                         public void takeLeadership(CuratorFramework client) throws Exception {
                             log.info("成为Master角色");
