@@ -15,7 +15,11 @@
  * @see org.apache.curator.framework.recipes.cache.NodeCache
  * @see org.apache.curator.framework.recipes.cache.NodeCacheListener
  *
- *
+ *  监听路径子节点的变化，具体相关事件见 PathChildrenCacheEvent，可以监控子节点的路径的创建，更新，删除事件，
+ *  但与原生API一样，不能监控二级子节点的变化状态
+ * @see org.apache.curator.framework.recipes.cache.PathChildrenCache
+ * @see org.apache.curator.framework.recipes.cache.PathChildrenCacheListener
+ * @see org.apache.curator.framework.recipes.cache.PathChildrenCacheEvent
  *
  */
 package org.donald.curator;

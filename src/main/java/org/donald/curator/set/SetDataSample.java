@@ -43,9 +43,9 @@ public class SetDataSample {
             String value = new String(client.getData().storingStatIn(stat).forPath(path), ConfigConstant.CHAR_SET_NAME);
             log.info("{} value :{} , stat:{}", new Object[]{path, value, JSONObject.toJSONString(stat)});
             log.info("Success set node for : {}, new version: {}", path ,
-                     client.setData().withVersion(stat.getVersion()).forPath(path).getVersion());
+                     client.setData().withVersion(stat.getVersion()).forPath(path,value.getBytes()).getVersion());
             //待旧的版本更新，将抛出org.apache.zookeeper.KeeperException$BadVersionException: KeeperErrorCode = BadVersion for /zk-book/c1
-            client.setData().withVersion(stat.getVersion()).forPath(path);
+            client.setData().withVersion(stat.getVersion()).forPath(path,value.getBytes());
             //如果需要删除子节点
             client.delete().deletingChildrenIfNeeded()
                     .withVersion(stat.getVersion()).forPath(path);
