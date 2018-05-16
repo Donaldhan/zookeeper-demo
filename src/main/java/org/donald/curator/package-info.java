@@ -21,5 +21,9 @@
  * @see org.apache.curator.framework.recipes.cache.PathChildrenCacheListener
  * @see org.apache.curator.framework.recipes.cache.PathChildrenCacheEvent
  *
+ * 分布式master选举
+ * @see org.apache.curator.framework.recipes.leader.LeaderSelector
+ * @see org.apache.curator.framework.recipes.leader.LeaderSelectorListenerAdapter
+ *
  */
 package org.donald.curator;
