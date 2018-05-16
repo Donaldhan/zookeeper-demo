@@ -1,4 +1,4 @@
-package org.donald.curator.recipes;
+package org.donald.curator.recipes.cache;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.RetryPolicy;

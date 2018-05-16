@@ -1,4 +1,4 @@
-package org.donald.curator.recipes;
+package org.donald.curator.recipes.cache;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.RetryPolicy;
@@ -10,17 +10,22 @@ import org.apache.curator.framework.recipes.cache.PathChildrenCacheListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
+import org.donald.common.threadpool.TaskExecutors;
 import org.donald.constant.ConfigConstant;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @ClassName: PathChildrenCacheSample
- * @Description: 监控路径子节点变化
+ * @Description: 监控路径子节点变化,使用自定义线程池，执行监听事件
  * @Author: Donaldhan
  * @Date: 2018-05-16 9:37
  */
 @Slf4j
-public class PathChildrenCacheSample {
+public class PathChildrenCacheWithExecutorServiceSample {
     private static CuratorFramework client;
+    private static ExecutorService exec = TaskExecutors.newFixedThreadPool(2);
     public static void main(String[] args) {
         String path = "/zk-book";
         try {
@@ -34,12 +39,14 @@ public class PathChildrenCacheSample {
                             .build();
             log.info("success connected...");
             client.start();
-            PathChildrenCache cache = new PathChildrenCache(client, path, true);
+            log.info( "current thread name:{} ", Thread.currentThread().getName() );
+            PathChildrenCache cache = new PathChildrenCache(client, path, true, false, exec);
             /**
-             * After cache is primed with initial values (in the background) a
-             * {@link PathChildrenCacheEvent.Type#INITIALIZED} will be posted
+             * NORMAL,
+             * cache will _not_ be primed. i.e. it will start empty and you will receive
+             * events for all nodes added, etc.
              */
-            cache.start(PathChildrenCache.StartMode.POST_INITIALIZED_EVENT);
+            cache.start(PathChildrenCache.StartMode.NORMAL);
             cache.getListenable().addListener(new PathChildrenCacheListener() {
                 @Override
                 public void childEvent(CuratorFramework client,
@@ -48,12 +55,15 @@ public class PathChildrenCacheSample {
                         case CHILD_ADDED:
                             String currentPathValue =  new String(client.getData().storingStatIn(new Stat()).forPath(path),ConfigConstant.CHAR_SET_NAME);
                             log.info("CHILD_ADDED,{},parent node data: {}",event.getData().getPath(), currentPathValue);
+                            log.info( "current thread name:{} ", Thread.currentThread().getName() );
                             break;
                         case CHILD_UPDATED:
                             log.info("CHILD_UPDATED,{},vaule:{}",event.getData().getPath(), new String(event.getData().getData(),ConfigConstant.CHAR_SET_NAME));
+                            log.info( "current thread name:{} ", Thread.currentThread().getName() );
                             break;
                         case CHILD_REMOVED:
                             log.info("CHILD_REMOVED,{}",event.getData().getPath());
+                            log.info( "current thread name:{} ", Thread.currentThread().getName() );
                             break;
                         default:
                             break;

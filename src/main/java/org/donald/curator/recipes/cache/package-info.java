@@ -16,4 +16,4 @@
  *
  *
  */
-package org.donald.curator.recipes;
+package org.donald.curator.recipes.cache;
