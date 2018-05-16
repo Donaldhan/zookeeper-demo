@@ -37,7 +37,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd" >
 			<groupId>org.apache.curator</groupId>
 			<artifactId>curator-framework</artifactId>
 		</dependency>
-		<!-- curator zkclient 包的典型使用场景 -->
+		<!-- curator zkclient 包的典型使用场景依赖包 -->
 		<dependency>
 			<groupId>org.apache.curator</groupId>
 			<artifactId>curator-recipes</artifactId>

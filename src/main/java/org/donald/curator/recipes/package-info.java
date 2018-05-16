@@ -1,5 +1,5 @@
 /**
- * 此包是curator的提供经典使用案例具体在curator-recipes依赖中
+ * 此包是curator的提供经典使用案例类都在curator-recipes依赖中
  * <dependency>
  * 			<groupId>org.apache.curator</groupId>
  * 			<artifactId>curator-recipes</artifactId>
