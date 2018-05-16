@@ -42,7 +42,7 @@ public class CreateNodeBackgroundSample {
             log.info("success connected...");
             client.start();
             log.info("Main thread: {}", Thread.currentThread().getName());
-            // 此处传入了自定义的Executor
+            // 此处传入了自定义的Executor，初始化路径值不是很靠谱，测试发现没有值。
             client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).inBackground(new BackgroundCallback() {
                 @Override
                 public void processResult(CuratorFramework client, CuratorEvent event) throws UnsupportedEncodingException {
@@ -77,7 +77,8 @@ public class CreateNodeBackgroundSample {
             if (exec != null) {
                 exec.shutdown();
             }
-            if (client != null) {
+            //关闭会话删除临时节点。
+           if (client != null) {
                 client.close();
             }
         }

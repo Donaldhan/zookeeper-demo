@@ -4,9 +4,18 @@
  *
  * @see org.apache.curator.framework.CuratorFrameworkFactory
  * @see  org.apache.curator.RetryPolicy
+ *
+ * 异步接口
  * @see org.apache.curator.framework.api.Backgroundable
  * @see org.apache.curator.framework.api.BackgroundCallback
  * @see org.apache.curator.framework.api.CuratorEvent
  * @see org.apache.zookeeper.ClientCnxn.EventThread
+ *
+ * 监听器 ， NodeCache可以监听路径的创建，更新，删除事件操作。
+ * @see org.apache.curator.framework.recipes.cache.NodeCache
+ * @see org.apache.curator.framework.recipes.cache.NodeCacheListener
+ *
+ *
+ *
  */
 package org.donald.curator;
