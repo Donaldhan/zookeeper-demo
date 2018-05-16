@@ -32,5 +32,8 @@
  * 分布式计数器
  * @see org.apache.curator.framework.recipes.atomic.DistributedAtomicInteger
  * @see org.apache.curator.retry.RetryNTimes
+ *
+ * 分布式Barrier
+ * @see org.apache.curator.framework.recipes.barriers.DistributedBarrier
  */
 package org.donald.curator;
