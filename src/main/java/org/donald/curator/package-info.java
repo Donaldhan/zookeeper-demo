@@ -29,5 +29,8 @@
  * 分布式可重入锁
  * @see org.apache.curator.framework.recipes.locks.InterProcessMutex
  *
+ * 分布式计数器
+ * @see org.apache.curator.framework.recipes.atomic.DistributedAtomicInteger
+ * @see org.apache.curator.retry.RetryNTimes
  */
 package org.donald.curator;
