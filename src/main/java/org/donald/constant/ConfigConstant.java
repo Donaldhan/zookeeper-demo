@@ -14,4 +14,5 @@ public class ConfigConstant {
     public static final int BASE_SLEEP_TIMES = 1000;
     public static final int MAX_RETRIES = 3;
     public static final String MASTER_SELECTOR_PATH = "/curator_recipes_master_path";
+    public static final String  BARRIER_PATH = "/curator_recipes_barrier_path";
 }
