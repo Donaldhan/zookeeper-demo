@@ -1,26 +1,26 @@
-package org.donald.curator.delete;
+package org.donald.curator.recipes;
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
+import org.apache.curator.framework.recipes.cache.NodeCache;
+import org.apache.curator.framework.recipes.cache.NodeCacheListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
-import org.apache.zookeeper.data.Stat;
 import org.donald.constant.ConfigConstant;
 
 /**
- * @ClassName: DeleteDataSample
- * @Description: 使用Curator删除节点
+ * @ClassName: NodeCacheNotExistsSample
+ * @Description: 测试监听节点不存在的情况
  * @Author: Donaldhan
- * @Date: 2018-05-14 8:36
+ * @Date: 2018-05-16 14:42
  */
 @Slf4j
-public class DeleteDataSample {
+public class NodeCacheNotExistsSample {
     private static CuratorFramework client;
     public static void main(String[] args) {
-        String path = "/zk-book/c1";
+        String path = "/curator_nodecache_sample";
         try {
             RetryPolicy retryPolicy = new ExponentialBackoffRetry(ConfigConstant.BASE_SLEEP_TIMES, ConfigConstant.MAX_RETRIES);
             client =
@@ -32,19 +32,21 @@ public class DeleteDataSample {
                             .build();
             log.info("success connected...");
             client.start();
-            //如果需要创建父节点，需要注意一个问题，创建的父节点是持久化的
+            final NodeCache cache = new NodeCache(client, path, false);
+            cache.start(true);
+            cache.getListenable().addListener(new NodeCacheListener() {
+                @Override
+                public void nodeChanged() {
+                    log.info("Node data update, new data: {}", new String(cache.getCurrentData().getData()));
+                }
+            });
             client.create()
                     .creatingParentsIfNeeded()
                     .withMode(CreateMode.EPHEMERAL)
                     .forPath(path, "init".getBytes());
-            Stat stat = new Stat();
-            String value = new String(client.getData().storingStatIn(stat).forPath(path), ConfigConstant.CHAR_SET_NAME);
-            log.info("{} value :{} , stat:{}", new Object[]{path, value, JSONObject.toJSONString(stat)});
-            //如果需要删除子节点
-            client.delete().deletingChildrenIfNeeded()
-                    .withVersion(stat.getVersion()).forPath(path);
-            log.info("success delete :{}, stat :{}...",path, JSONObject.toJSONString(stat));
             Thread.sleep(6000);
+            //使用过后，不要忘了关闭节点缓存
+            cache.close();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -55,5 +57,4 @@ public class DeleteDataSample {
             }
         }
     }
-
 }
