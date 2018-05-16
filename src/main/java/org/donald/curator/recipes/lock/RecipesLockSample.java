@@ -75,7 +75,7 @@ public class RecipesLockSample {
             if (exec != null) {
                 exec.shutdown();
             }
-            /*  如果在会话执行的过程中，如果关闭会话，将抛出异常
+            /*  如果在会话执行的过程中，关闭会话，将抛出异常
             java.lang.IllegalStateException: instance must be started before calling this method
             if (client != null) {
                 client.close();
