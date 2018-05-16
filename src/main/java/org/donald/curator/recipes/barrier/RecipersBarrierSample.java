@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * @ClassName: RecipersBarrierSample
- * @Description: 使用Curator实现分布式Barrier
+ * @Description: 使用Curator实现分布式Barrier，实际在分布式环境中使用，待所有应用到达屏障时，移除屏障。
  * @Author: Donaldhan
  * @Date: 2018-05-16 17:39
  */
