@@ -12,13 +12,13 @@ import org.donald.constant.ConfigConstant;
 import java.util.concurrent.ExecutorService;
 
 /**
- * @ClassName: RecipersBarrierSample
+ * @ClassName: DistributedBarrierSample
  * @Description: 使用Curator实现分布式Barrier，实际在分布式环境中使用，待所有应用到达屏障时，移除屏障。
  * @Author: Donaldhan
  * @Date: 2018-05-16 17:39
  */
 @Slf4j
-public class RecipersBarrierSample {
+public class DistributedBarrierSample {
     /**
      * 布式Barrier
      */
@@ -52,6 +52,7 @@ public class RecipersBarrierSample {
                     }
                 });
             }
+            //等待所有分布式屏障节点到达屏障，以免在所有节点到达前，移除屏障
             Thread.sleep( 6000 );
             barrier.removeBarrier();
             log.info("移除分布式屏障...");
