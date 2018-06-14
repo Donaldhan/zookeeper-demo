@@ -9,6 +9,7 @@ package org.donald.constant;
 public class ConfigConstant {
     public static final String IP = "127.0.0.1:2181";
     public static final int SESSION_TIMEOUT = 5000;
+    public static final int PORT = 2181;
     public static final int CONNETING_TIMEOUT = 3000;
     public static final String CHAR_SET_NAME = "UTF-8";
     public static final int BASE_SLEEP_TIMES = 1000;
