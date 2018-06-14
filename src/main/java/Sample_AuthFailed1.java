@@ -29,6 +29,7 @@ public class Sample_AuthFailed1 implements Watcher {
         Thread.sleep(Integer.MAX_VALUE);
     }
 
+    @Override
     public void process(WatchedEvent event) {
         System.out.println(event.getState());
         System.out.println(event.getType());
